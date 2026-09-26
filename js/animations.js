@@ -344,13 +344,13 @@
             y        : shiftY * t,
             duration : 0.25,
             ease     : 'power2.out',
-            overwrite: true,
+            overwrite: 'auto',
           });
         }
       });
 
       btn.addEventListener('mouseleave', () => {
-        gsap.to(btn, { x: 0, y: 0, duration: 0.4, ease: 'elastic.out(1, 0.5)', overwrite: true });
+        gsap.to(btn, { x: 0, y: 0, duration: 0.4, ease: 'elastic.out(1, 0.5)', overwrite: 'auto' });
       });
     });
   }
@@ -380,7 +380,7 @@
           duration    : 0.3,
           ease        : 'power2.out',
           transformPerspective: 800,
-          overwrite   : true,
+          overwrite   : 'auto',
         });
       });
 
@@ -389,7 +389,7 @@
           rotateX: 0, rotateY: 0,
           duration: 0.55,
           ease    : 'power3.out',
-          overwrite: true,
+          overwrite: 'auto',
           onComplete() { card.style.willChange = 'auto'; },
         });
       });

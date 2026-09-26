@@ -251,38 +251,49 @@
         scrollTrigger: {
           trigger      : processSection,
           start        : 'top top',
-          end          : `+=${steps.length * 260}`,   // was 160 — more scroll distance
+          end          : `+=${steps.length * 350}`,   // Increased scroll distance
           pin          : true,
-          scrub        : 1.5,                          // slightly more lag = smoother
+          scrub        : 1.0,                          // Tighter scrub feel
           anticipatePin: 1,
         },
       });
 
-      tl.to(fillLine, { scaleX: 1, ease: 'none' }, 0);
-
-      const stepDuration = 1 / steps.length;
+      // Sequential animation: Node activates -> Line draws to next node
       steps.forEach((step, i) => {
-        const t = i * stepDuration;
+        // 1. Activate node
         tl.to(nodes[i], {
           borderColor     : 'var(--accent)',
           color           : '#ffffff',
           backgroundColor : 'var(--accent)',
           scale           : 1.15,
-          duration        : stepDuration * 0.4,
+          duration        : 0.15,
           ease            : 'power2.out',
-        }, t);
+        });
         tl.to(nodes[i], {
           scale   : 1,
-          duration: stepDuration * 0.3,
+          duration: 0.1,
           ease    : 'power2.inOut',
-        }, t + stepDuration * 0.4);
+        }, "<0.1");
+
+        // 2. Reveal text
         tl.to(contents[i], {
           opacity : 1,
           y       : 0,
-          duration: stepDuration * 0.5,
+          duration: 0.3,
           ease    : 'power2.out',
-        }, t + stepDuration * 0.15);
+        }, "<0");
+
+        // 3. Draw line to next node
+        tl.to(fillLine, { 
+          scaleX: (i + 1) / steps.length, 
+          duration: 0.6, 
+          ease: 'none' 
+        });
       });
+
+      // Add a buffer at the end of the timeline (no animation)
+      // This keeps the section pinned for extra scroll distance so the user can read all 6 points
+      tl.to({}, { duration: 2 });
     }
   }
 

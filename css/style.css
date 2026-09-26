@@ -93,6 +93,9 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: 2px;
     font-family: var(--font-heading, "Rajdhani", sans-serif);
     font-weight: 600;
+    font-size: 1.25rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
 
     display: inline-flex;
     align-items: center;
@@ -136,6 +139,9 @@ h3 {
     letter-spacing: 2px;
     font-family: var(--font-heading, "Rajdhani", sans-serif);
     font-weight: 600;
+    font-size: 1.25rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
  justify-content: center; }
 .section-header-center .eyebrow::before { display: none; }
 

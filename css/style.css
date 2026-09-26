@@ -253,7 +253,7 @@ h3 {
 /* =========================================
    HOW WE DO THINGS (BENTO GRID)
 ========================================= */
-.bento-values { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; position: relative; z-index: 2; }
+.bento-values { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; position: relative; z-index: 2; }
 .bento-card {
     background: var(--bg-secondary);
     border: 1px solid var(--border);
@@ -593,7 +593,7 @@ h3 {
    MEDIA QUERIES
 ========================================= */
 @media (max-width: 1024px) {
-    .bento-values { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; position: relative; z-index: 2; }
+    .bento-values { grid-template-columns: repeat(2, 1fr); }
     .bento-wide { grid-column: span 1; }
     .vision-layout { grid-template-columns: 1fr; gap: 32px; }
     .cta-grid { grid-template-columns: 1fr; }
@@ -601,6 +601,7 @@ h3 {
 }
 
 @media (max-width: 768px) {
+    .bento-values { grid-template-columns: 1fr; }
     .hero-grid { grid-template-columns: 1fr; gap: 48px; }
     .case-study, .case-study:nth-child(even) {
         grid-template-columns: 1fr;

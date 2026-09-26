@@ -190,22 +190,23 @@
   // ══════════════════════════════════════════════════════════════════════════
   const workSection = document.querySelector('#work');
   if (workSection) {
-    // Clip-path wipe on each .cs-visual (the image container)
-    gsap.utils.toArray('#work .cs-visual').forEach(el => {
-      gsap.from(el, {
-        clipPath  : 'inset(0 100% 0 0)',   // hidden → fully revealed L→R
-        opacity   : 1,                      // opacity stays 1, clip does the work
-        duration  : 1.2,
-        ease      : 'power3.inOut',
-        clearProps: 'clipPath,willChange',
-        scrollTrigger: { trigger: el, start: 'top 82%', once: true },
+    // Use setTimeout(0) so script.js's dynamic card injection is complete
+    setTimeout(() => {
+      gsap.utils.toArray('#work .cs-visual').forEach(el => {
+        gsap.from(el, {
+          clipPath  : 'inset(0 100% 0 0)',
+          duration  : 1.3,
+          ease      : 'power3.inOut',
+          clearProps: 'clipPath,willChange',
+          scrollTrigger: { trigger: el, start: 'top 82%', once: true },
+        });
       });
-    });
-
-    // Text/info block still does a regular fade-up
-    revealFrom('#work .cs-info, #work .cs-content',
-      workSection, { stagger: 0.1, y: 22, start: 'top 80%' });
+      revealFrom('#work .case-study .cs-content',
+        workSection, { stagger: 0.12, y: 22, start: 'top 80%' });
+      ScrollTrigger.refresh();
+    }, 0);
   }
+
 
 
   // ══════════════════════════════════════════════════════════════════════════
@@ -311,24 +312,27 @@
     ];
 
     document.querySelectorAll(MAGNETIC_SELECTORS.join(', ')).forEach(btn => {
-      const RANGE  = 55;   // px radius that triggers the pull
-      const PULL   = 6;    // max px shift
+      const RANGE = 55;
+      const PULL  = 5;   // max px shift
 
       btn.addEventListener('mousemove', e => {
-        const rect   = btn.getBoundingClientRect();
-        const cx     = rect.left + rect.width  / 2;
-        const cy     = rect.top  + rect.height / 2;
-        const dx     = e.clientX - cx;
-        const dy     = e.clientY - cy;
-        const dist   = Math.sqrt(dx * dx + dy * dy);
+        const rect = btn.getBoundingClientRect();
+        const cx   = rect.left + rect.width  / 2;
+        const cy   = rect.top  + rect.height / 2;
+        const dx   = e.clientX - cx;
+        const dy   = e.clientY - cy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < RANGE) {
-          const strength = (RANGE - dist) / RANGE;
+          // Linear map: cursor at edge = 0 shift, cursor at button center = PULL shift
+          const t  = 1 - dist / RANGE;   // 0..1
+          const shiftX = (dx / RANGE) * PULL;   // proportional, max ±PULL px
+          const shiftY = (dy / RANGE) * PULL;
           gsap.to(btn, {
-            x       : dx * strength * PULL / RANGE * RANGE,
-            y       : dy * strength * PULL / RANGE * RANGE,
-            duration: 0.25,
-            ease    : 'power2.out',
+            x        : shiftX * t,
+            y        : shiftY * t,
+            duration : 0.25,
+            ease     : 'power2.out',
             overwrite: true,
           });
         }

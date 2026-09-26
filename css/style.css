@@ -90,11 +90,10 @@ h1, h2, h3, h4, h5, h6 {
 .section-darker { background: var(--bg-secondary); border-block: 1px solid var(--border); }
 
 .eyebrow {
-    letter-spacing: 2px;
     font-family: var(--font-heading, "Rajdhani", sans-serif);
-    font-weight: 600;
-    font-size: 1.25rem;
-    letter-spacing: 3px;
+    font-weight: 800;
+    font-size: 1.75rem;
+    letter-spacing: 4px;
     text-transform: uppercase;
 
     display: inline-flex;
@@ -136,11 +135,10 @@ h3 {
 .section-header-left, .section-header-center { margin-bottom: 64px; }
 .section-header-center { text-align: center; }
 .section-header-center .eyebrow {
-    letter-spacing: 2px;
     font-family: var(--font-heading, "Rajdhani", sans-serif);
-    font-weight: 600;
-    font-size: 1.25rem;
-    letter-spacing: 3px;
+    font-weight: 800;
+    font-size: 1.75rem;
+    letter-spacing: 4px;
     text-transform: uppercase;
  justify-content: center; }
 .section-header-center .eyebrow::before { display: none; }

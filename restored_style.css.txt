@@ -1,0 +1,102 @@
+Created At: 2026-09-23T21:14:25+05:30
+Completed At: 2026-09-23T21:14:25+05:30
+File Path: `file:///c:/Users/JAGDISH/Downloads/Velocity_Studio/Velocity_Studio/css/style.css`
+Total Lines: 860
+Total Bytes: 15287
+Showing lines 740 to 833
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+740: 
+741: .footer-bottom {
+742:     padding: 22px 0 28px;
+743:     border-top: 1px solid var(--border);
+744: }
+745: 
+746: @media (max-width: 1040px) {
+747:     .hero-grid,
+748:     .split-section {
+749:         grid-template-columns: 1fr;
+750:     }
+751: 
+752:     .hero-visual {
+753:         min-height: 380px;
+754:     }
+755: 
+756:     .project-grid,
+757:     .achievement-grid,
+758:     .team-grid {
+759:         grid-template-columns: repeat(2, minmax(0, 1fr));
+760:     }
+761: 
+762:     .project-detail-grid {
+763:         grid-template-columns: 1fr;
+764:     }
+765: }
+766: 
+767: @media (max-width: 820px) {
+768:     .menu-toggle {
+769:         display: inline-flex;
+770:     }
+771: 
+772:     .primary-nav {
+773:         position: fixed;
+774:         top: var(--header-height);
+775:         left: 0;
+776:         right: 0;
+777:         display: none;
+778:         flex-direction: column;
+779:         align-items: stretch;
+780:         gap: 0;
+781:         padding: 12px 20px 22px;
+782:         border-bottom: 1px solid var(--border);
+783:         background: var(--bg-secondary);
+784:     }
+785: 
+786:     .primary-nav.is-open {
+787:         display: flex;
+788:     }
+789: 
+790:     .primary-nav a {
+791:         padding: 14px 0;
+792:         border-bottom: 1px solid var(--border);
+793:     }
+794: 
+795:     .primary-nav a:last-child {
+796:         border-bottom: 0;
+797:     }
+798: 
+799:     .section {
+800:         padding: 72px 0;
+801:     }
+802: 
+803:     .hero {
+804:         padding-top: 58px;
+805:     }
+806: 
+807:     .footer-grid {
+808:         grid-template-columns: 1fr;
+809:         gap: 28px;
+810:     }
+811: }
+812: 
+813: @media (max-width: 620px) {
+814:     .container {
+815:         width: min(100% - 28px, var(--container));
+816:     }
+817: 
+818:     .brand-name {
+819:         font-size: 0.94rem;
+820:     }
+821: 
+822:     .brand-logo {
+823:         width: 40px;
+824:         height: 40px;
+825:         flex-basis: 40px;
+826:     }
+827: 
+828:     .hero-grid {
+829:         gap: 38px;
+830:     }
+831: 
+832:     .hero-visual {
+833:         min-height: 270px;
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

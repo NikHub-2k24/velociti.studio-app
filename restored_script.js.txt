@@ -1,0 +1,517 @@
+Created At: 2026-09-23T21:06:51+05:30
+Completed At: 2026-09-23T21:06:51+05:30
+File Path: `file:///c:/Users/JAGDISH/Downloads/Velocity_Studio/Velocity_Studio/js/script.js`
+Total Lines: 509
+Total Bytes: 20928
+Showing lines 1 to 509
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: const menuToggle = document.querySelector(".menu-toggle");
+2: const primaryNav = document.querySelector(".primary-nav");
+3: const currentYear = document.querySelector("#current-year");
+4: 
+5: if (currentYear) {
+6:     currentYear.textContent = new Date().getFullYear();
+7: }
+8: 
+9: if (menuToggle && primaryNav) {
+10:     menuToggle.addEventListener("click", () => {
+11:         const isOpen = primaryNav.classList.toggle("is-open");
+12:         document.body.classList.toggle("nav-open", isOpen);
+13:         menuToggle.setAttribute("aria-expanded", String(isOpen));
+14:     });
+15: 
+16:     primaryNav.addEventListener("click", (event) => {
+17:         if (event.target instanceof HTMLAnchorElement) {
+18:             primaryNav.classList.remove("is-open");
+19:             document.body.classList.remove("nav-open");
+20:             menuToggle.setAttribute("aria-expanded", "false");
+21:         }
+22:     });
+23: }
+24: 
+25: const technologyCategories = [
+26:     {
+27:         name: "WEB DEVELOPMENT",
+28:         technologies: [
+29:             { name: "HTML", icon: "html.svg" },
+30:             { name: "CSS", icon: "css.svg" },
+31:             { name: "JavaScript", icon: "javascript.svg" },
+32:             { name: "React.js", icon: "react.svg" },
+33:             { name: "Node.js", icon: "nodejs.svg" },
+34:             { name: "TypeScript", icon: "typescript.svg" },
+35:             { name: "Next.js", icon: "nextjs.svg" },
+36:             { name: "Git / GitHub", icon: "github.svg" }
+37:         ]
+38:     },
+39:     {
+40:         name: "AI & AUTOMATION",
+41:         technologies: [
+42:             { name: "AI Agents", icon: "ai-agents.svg" },
+43:             { name: "n8n", icon: "n8n.svg" },
+44:             { name: "LLM Integration", icon: "llm-integration.svg" },
+45:             { name: "Agentic Workflows", icon: "agentic-workflows.svg" },
+46:             { name: "AI Automation", icon: "ai-automation.svg" },
+47:             { name: "API Integration", icon: "api-integration.svg" },
+48:             { name: "Workflow Orchestration", icon: "workflow-orchestration.svg" }
+49:         ]
+50:     },
+51:     {
+52:         name: "UI/UX & DESIGN",
+53:         technologies: [
+54:             { name: "UI Engineering", icon: "ui-engineering.svg" },
+55:             { name: "UX Design", icon: "ux-design.svg" },
+56:             { name: "Design Systems", icon: "design-systems.svg" },
+57:             { name: "Figma", icon: "figma.svg" },
+58:             { name: "Component Architecture", icon: "component-architecture.svg" }
+59:         ]
+60:     },
+61:     {
+62:         name: "AI/ML & APIs",
+63:         technologies: [
+64:             { name: "Machine Learning", icon: "machine-learning.svg" },
+65:             { name: "Deep Learning", icon: "deep-learning.svg" },
+66:             { name: "Computer Vision", icon: "computer-vision.svg" },
+67:             { name: "Model Integration", icon: "model-integration.svg" },
+68:             { name: "REST APIs", icon: "rest-apis.svg" }
+69:         ]
+70:     },
+71:     {
+72:         name: "APPLICATION & BACKEND DEVELOPMENT",
+73:         technologies: [
+74:             { name: "Flutter Development", icon: "flutter.svg" },
+75:             { name: "Backend Development", icon: "backend-development.svg" },
+76:             { name: "Python", icon: "python.svg" },
+77:             { name: "SQL", icon: "sql.svg" },
+78:             { name: "PostgreSQL", icon: "postgresql.svg" }
+79:         ]
+80:     },
+81:     {
+82:         name: "CLOUD & DEPLOYMENT",
+83:         technologies: [
+84:             { name: "Vercel", icon: "vercel.svg" },
+85:             { name: "Neon", icon: "neon.svg" },
+86:             { name: "Render", icon: "render.svg" }
+87:         ]
+88:     }
+89: ];
+90: 
+91: const achievements = [
+92:     {
+93:         status: "Winner",
+94:         event: "RoboFest Gujarat 3.0",
+95:         year: "2022",
+96:         organizer: "GUJCOST"
+97:     },
+98:     {
+99:         status: "Winner",
+100:         event: "OlympAI Hackathon",
+101:         year: "2024",
+102:         organizer: "MethdAI"
+103:     },
+104:     {
+105:         status: "Winner",
+106:         event: "Code Quest",
+107:         year: "2026",
+108:         organizer: "JG UNIVERSITY"
+109:     },
+110:     {
+111:         status: "Finalist",
+112:         event: "RoboFest Gujarat 5.0",
+113:         year: "2025",
+114:         organizer: "GUJCOST"
+115:     },
+116:     {
+117:         status: "Finalist",
+118:         event: "Odoo × IIT Gandhinagar 24-Hour Hackathon",
+119:         year: "2024",
+120:         organizer: "ODOO"
+121:     },
+122:     {
+123:         status: "Finalist",
+124:         event: "Vikas Saptah Hackathon SSIP 2.0",
+125:         year: "2025",
+126:         organizer: "Government Of Gujarat"
+127:     }
+128: ];
+129: 
+130: const projects = [
+131:     {
+132:         slug: "restaurant-owner-portfolio",
+133:         name: "Restaurant Owner Portfolio",
+134:         client: "Salyan Restaurant",
+135:         description: "This project is a beautifully designed digital storefront for a premium restaurant. It captures the warm and earthy vibe of the dining experience through a clean layout, elegant fonts, and high quality imagery. Visitors can smoothly explore the story behind the restaurant, browse the seasonal menu, view a photo gallery of signature dishes, and easily find location details to reserve a table. The website is built to be fast and look perfect on any phone or computer, ensuring that the online experience feels just as inviting as walking through the actual restaurant doors.",
+136:         technologies: ["React 19", "TypeScript", "Vite", "Tailwind CSS", "Framer"],
+137:         github: "https://github.com/auraX-technologies/Restaurant-Owner-Portfolio-Website",
+138:         live: "https://aurax-technologies.github.io/Restaurant-Owner-Portfolio-Website/",
+139:         images: [
+140:             "assets/images/projects/restaurant-owner-portfolio/img1.jpeg",
+141:             "assets/images/projects/restaurant-owner-portfolio/img2.jpeg"
+142:         ]
+143:     },
+144:     {
+145:         slug: "sentinel-ai",
+146:         name: "Sentinel AI",
+147:         client: "Economic Times Hackathon",
+148:         description: "Sentinel AI offers real-time defense against fraud messages and harmful links on an Android device. The threat detection technology works solely on the device without any help from the cloud; it scans new messages and links immediately upon their arrival. It analyses them for deceiving URLs, spelling tricks, and scamming techniques, all without giving you time to click on them. Since the scanning process takes place entirely within your device, no data about your private conversations or browsing is transmitted elsewhere.",
+149:         technologies: ["Kotlin", "Java", "TensorFlow", "Hilt"],
+150:         github: "https://github.com/Y-Hans/Sentinel-AI",
+151:         live: "",
+152:         images: [
+153:             "assets/images/projects/sentinel-ai/img1.jpeg",
+154:             "assets/images/projects/sentinel-ai/img2.jpeg"
+155:         ]
+156:     },
+157:     {
+158:         slug: "ma-cargo-services",
+159:         name: "Website for Cargo Services",
+160:         client: "M.A Cargo Services",
+161:         description: "This website is designed for M.A. Cargo Services, which offers local and international transportation of goods without any shipping complications. Being an Ahmedabad-based company existing since 2008, M.A. Cargo Services unifies all customs, import-export, and logistics-related services under one roof. We were supposed to design a website that would present the company's logistics services in an organized manner and attract new customers.",
+162:         technologies: ["HTML", "CSS", "JavaScript"],
+163:         github: "https://github.com/Lakshrewani26/MA_Cargo_Services",
+164:         live: "https://ma-cargo-services.vercel.app/",
+165:         images: [
+166:             "assets/images/projects/ma-cargo-services/img1.png",
+167:             "assets/images/projects/ma-cargo-services/img2.png"
+168:         ]
+169:     },
+170:     {
+171:         slug: "deep-sight",
+172:         name: "Deep Sight",
+173:         client: "Personal Project",
+174:         description: "DeepSight is an AI powered platform built to detect deepfakes and generate synthetic images. I built the system around a custom deep learning model for image classification and integrated Stable Diffusion for AI image generation. The models are connected to a FastAPI backend and a Flutter frontend to make the whole system accessible through a simple, user friendly interface.",
+175:         technologies: ["Flutter", "FastAPI", "TensorFlow", "Python"],
+176:         github: "https://github.com/Om-Kaurani/DeepSight",
+177:         live: "",
+178:         images: [
+179:             "assets/images/projects/deep-sight/img1.jpeg",
+180:             "assets/images/projects/deep-sight/img2.jpeg"
+181:         ]
+182:     },
+183:     {
+184:         slug: "gesture-controller",
+185:         name: "Gesture Controller",
+186:         client: "Personal Project",
+187:         description: "Gesture controller transforms your everyday webcam into an invisible mouse that lets you control your computer using just your hands. Instead of resting your hand on a physical mouse or touchpad, you simply move your hand in the air to guide the cursor across your screen. You can click on things by pinching your fingers together, scroll through pages by giving a thumbs up or down, and zoom in or out by opening your palm. It completely understands the natural movements of your hand, making it feel like you are touching your screen from a distance without needing any extra equipment.",
+188:         technologies: ["OpenCV", "MediaPipe", "PyAutoGUI", "NumPy"],
+189:         github: "https://github.com/NikHub-2k24/gesture-controller",
+190:         live: "",
+191:         images: [
+192:             "assets/images/projects/gesture-controller/img1.jpeg",
+193:             "assets/images/projects/gesture-controller/img2.jpeg"
+194:         ]
+195:     },
+196:     {
+197:         slug: "ai-spend-audit",
+198:         name: "AI Spend Audit",
+199:         client: "CREDEX",
+200:         description: "AI Spend Auditor is a free interactive tool that helps you uncover your spending on popular AI platforms such as Cursor, GitHub Copilot, ChatGPT, Claude, OpenAI/Anthropic APIs, and Gemini. It takes only 2 minutes to audit your subscriptions and see where you are paying for overlapping tiers or missing savings opportunities.",
+201:         technologies: ["Node.js", "TypeScript", "CSS", "JavaScript"],
+202:         github: "https://github.com/Lakshrewani26/ai-spend-audit",
+203:         live: "https://ai-spend-audit-kappa.vercel.app/",
+204:         images: [
+205:             "assets/images/projects/ai-spend-audit/img1.png",
+206:             "assets/images/projects/ai-spend-audit/img2.png"
+207:         ]
+208:     },
+209:     {
+210:         slug: "gujarat-police-feedback",
+211:         name: "Gujarat Police Feedback",
+212:         client: "SSIP Hackathon",
+213:         description: "Gujarat Police Feedback & Analytics Portal offers an end-to-end digital solution to collect, analyze and manage citizen feedback. The portal provides a public-facing website and secured role-based dashboards for police stations. Easy-to-use QR codes for each police station are used to capture feedback, along with AI-powered sentiment analysis and instant feedback acknowledgment. Admin and police can view analytics, track performance of individual police stations, and manage feedback. The system also includes a manageable police station and officer information system.",
+214:         technologies: ["HTML", "CSS", "JavaScript", "Python", "MySQL", "Flask"],
+215:         github: "https://github.com/Lakshrewani26/gujarat-police-feedback",
+216:         live: "",
+217:         images: []
+218:     },
+219:     {
+220:         slug: "exam-scheduler",
+221:         name: "Exam Scheduler",
+222:         client: "OlympAI Hackathon",
+223:         description: "Exam Scheduler is designed for students who are facing problems with time management and their schedules during exam time. It provides ready-made schedules and the time they need to give to their subjects based on the exam schedule students provide and subject-wise priority. Students can also assign tasks for themselves and check their progress at the end of the day.",
+224:         technologies: ["Python", "Tkinter", "MySQL"],
+225:         github: "https://github.com/Lakshrewani26/OlympAI_Hackathon",
+226:         live: "",
+227:         images: []
+228:     },
+229:     {
+230:         slug: "campusops-ai",
+231:         name: "CampusOps AI",
+232:         client: "Personal Project",
+233:         description: "CampusOps AI is a smart digital assistant built to help college event organizers handle unexpected problems effortlessly. Imagine a scenario where a scheduled building suddenly becomes unavailable right before a big campus orientation. Instead of leaving organizers scrambling, this system automatically notices the problem, searches the campus schedule for a new room that fits the crowd, and tracks down enough available volunteers to help at the new location. It then builds a complete recovery plan and waits for a human organizer to approve it. The system takes care of all the stressful coordination while keeping a real person completely in control of the final decisions.",
+234:         technologies: ["Python"],
+235:         github: "https://github.com/NikHub-2k24/clubops-pillarA",
+236:         live: "",
+237:         images: []
+238:     }
+239: ];
+240: 
+241: function createTechnologyCard(technology) {
+242:     const card = document.createElement("span");
+243:     card.className = "technology-card";
+244: 
+245:     const icon = document.createElement("img");
+246:     icon.className = "technology-logo";
+247:     icon.src = `assets/images/technologies/${technology.icon}`;
+248:     icon.alt = "";
+249:     icon.setAttribute("aria-hidden", "true");
+250:     icon.loading = "lazy";
+251: 
+252:     const name = document.createElement("span");
+253:     name.textContent = technology.name;
+254: 
+255:     card.append(icon, name);
+256:     return card;
+257: }
+258: 
+259: function createAchievementCard(achievement) {
+260:     const card = document.createElement("article");
+261:     card.className = "achievement-card";
+262: 
+263:     const status = document.createElement("span");
+264:     status.className = "achievement-status";
+265:     status.textContent = achievement.status.toUpperCase();
+266: 
+267:     const event = document.createElement("h3");
+268:     event.className = "achievement-event";
+269:     event.textContent = achievement.event;
+270: 
+271:     const year = document.createElement("p");
+272:     year.className = "achievement-year";
+273:     year.textContent = achievement.year;
+274: 
+275:     const organizer = document.createElement("p");
+276:     organizer.className = "achievement-organizer";
+277:     organizer.textContent = `Organised by: ${achievement.organizer}`;
+278: 
+279:     card.append(status, event, year, organizer);
+280:     return card;
+281: }
+282: 
+283: function createProjectVisual(project, src, imageNumber) {
+284:     const visual = document.createElement("div");
+285:     visual.className = "project-visual";
+286: 
+287:     const fallback = document.createElement("span");
+288:     fallback.className = "project-image-fallback";
+289:     fallback.textContent = "PROJECT IMAGE";
+290: 
+291:     if (src) {
+292:         const image = document.createElement("img");
+293:         image.className = "project-image";
+294:         image.alt = `${project.name} image ${imageNumber}`;
+295:         image.loading = "lazy";
+296:         image.hidden = true;
+297: 
+298:         image.addEventListener("load", () => {
+299:             image.hidden = false;
+300:             visual.classList.add("has-image");
+301:         });
+302: 
+303:         image.addEventListener("error", () => {
+304:             image.hidden = true;
+305:             visual.classList.add("is-missing");
+306:         });
+307: 
+308:         image.src = src;
+309:         visual.append(image, fallback);
+310:         return visual;
+311:     }
+312: 
+313:     visual.appendChild(fallback);
+314:     return visual;
+315: }
+316: 
+317: function createProjectLink(href, text) {
+318:     const link = document.createElement("a");
+319:     link.className = "button button-secondary project-link";
+320:     link.href = href;
+321:     link.textContent = text;
+322:     link.target = "_blank";
+323:     link.rel = "noopener noreferrer";
+324:     return link;
+325: }
+326: 
+327: function createTechnologyTags(project) {
+328:     const tags = document.createElement("div");
+329:     tags.className = "project-tech-tags";
+330: 
+331:     project.technologies.forEach((technology) => {
+332:         const tag = document.createElement("span");
+333:         tag.className = "project-tech-tag";
+334:         tag.textContent = technology;
+335:         tags.appendChild(tag);
+336:     });
+337: 
+338:     return tags;
+339: }
+340: 
+341: function createHomeProjectCard(project) {
+342:     const card = document.createElement("article");
+343:     card.className = "project-card";
+344: 
+345:     const body = document.createElement("div");
+346:     body.className = "card-body";
+347: 
+348:     const title = document.createElement("h3");
+349:     title.textContent = project.name;
+350: 
+351:     const client = document.createElement("p");
+352:     client.className = "project-client";
+353:     client.textContent = project.client;
+354: 
+355:     const details = document.createElement("a");
+356:     details.className = "project-card-action";
+357:     details.href = `projects.html#${project.slug}`;
+358:     details.textContent = "View Project Details";
+359: 
+360:     body.append(title, client, details);
+361:     card.append(createProjectVisual(project, project.images[0], 1), body);
+362:     return card;
+363: }
+364: 
+365: function createProjectDetailCard(project) {
+366:     const card = document.createElement("article");
+367:     card.className = "project-detail-card";
+368:     card.id = project.slug;
+369: 
+370:     const gallery = document.createElement("div");
+371:     gallery.className = "project-gallery";
+372:     gallery.append(
+373:         createProjectVisual(project, project.images[0], 1),
+374:         createProjectVisual(project, project.images[1], 2)
+375:     );
+376: 
+377:     const content = document.createElement("div");
+378:     content.className = "project-detail-content";
+379: 
+380:     const title = document.createElement("h2");
+381:     title.textContent = project.name;
+382: 
+383:     const client = document.createElement("p");
+384:     client.className = "project-client";
+385:     client.textContent = project.client;
+386: 
+387:     const description = document.createElement("p");
+388:     description.className = "project-description";
+389:     description.textContent = project.description;
+390: 
+391:     const links = document.createElement("div");
+392:     links.className = "project-links";
+393:     links.appendChild(createProjectLink(project.github, "GitHub"));
+394: 
+395:     if (project.live) {
+396:         links.appendChild(createProjectLink(project.live, "Live"));
+397:     }
+398: 
+399:     content.append(title, client, description, createTechnologyTags(project), links);
+400:     card.append(gallery, content);
+401:     return card;
+402: }
+403: 
+404: function renderProjects() {
+405:     document.querySelectorAll("[data-project-list]").forEach((container) => {
+406:         const listType = container.getAttribute("data-project-list");
+407:         const visibleProjects = listType === "featured" ? projects.slice(0, 3) : projects;
+408: 
+409:         container.replaceChildren();
+410:         visibleProjects.forEach((project) => {
+411:             const card = listType === "featured"
+412:                 ? createHomeProjectCard(project)
+413:                 : createProjectDetailCard(project);
+414: 
+415:             container.appendChild(card);
+416:         });
+417:     });
+418: }
+419: 
+420: function renderAchievements() {
+421:     const container = document.querySelector(".achievement-grid");
+422:     if (!container) {
+423:         return;
+424:     }
+425: 
+426:     container.replaceChildren();
+427: 
+428:     achievements.forEach((achievement) => {
+429:         container.appendChild(createAchievementCard(achievement));
+430:     });
+431: }
+432: 
+433: function renderTechnologyCategories() {
+434:     const container = document.querySelector(".technology-categories");
+435:     if (!container) {
+436:         return;
+437:     }
+438: 
+439:     container.replaceChildren();
+440: 
+441:     technologyCategories.forEach((category) => {
+442:         const categoryElement = document.createElement("article");
+443:         categoryElement.className = "technology-category";
+444: 
+445:         const heading = document.createElement("h3");
+446:         heading.textContent = category.name;
+447: 
+448:         const marquee = document.createElement("div");
+449:         marquee.className = "technology-marquee";
+450:         marquee.setAttribute("aria-label", `${category.name} technologies`);
+451: 
+452:         const track = document.createElement("div");
+453:         track.className = "technology-track";
+454: 
+455:         category.technologies.forEach((technology) => {
+456:             track.appendChild(createTechnologyCard(technology));
+457:         });
+458: 
+459:         marquee.appendChild(track);
+460:         categoryElement.append(heading, marquee);
+461:         container.appendChild(categoryElement);
+462:     });
+463: }
+464: 
+465: function setupTechnologyMarquees() {
+466:     document.querySelectorAll(".technology-marquee").forEach((marquee) => {
+467:         const track = marquee.querySelector(".technology-track");
+468:         if (!track) {
+469:             return;
+470:         }
+471: 
+472:         const sourceCards = Array.from(track.querySelectorAll(".technology-card"))
+473:             .filter((card) => !card.hasAttribute("aria-hidden") && !card.closest("[aria-hidden='true']"));
+474: 
+475:         if (!sourceCards.length) {
+476:             return;
+477:         }
+478: 
+479:         const group = document.createElement("div");
+480:         group.className = "technology-group";
+481: 
+482:         sourceCards.forEach((card) => {
+483:             group.appendChild(card.cloneNode(true));
+484:         });
+485: 
+486:         track.replaceChildren(group);
+487: 
+488:         while (group.scrollWidth < marquee.offsetWidth + 240) {
+489:             sourceCards.forEach((card) => {
+490:                 const clone = card.cloneNode(true);
+491:                 clone.setAttribute("aria-hidden", "true");
+492:                 group.appendChild(clone);
+493:             });
+494:         }
+495: 
+496:         const duplicateGroup = group.cloneNode(true);
+497:         duplicateGroup.setAttribute("aria-hidden", "true");
+498:         track.appendChild(duplicateGroup);
+499:         track.style.setProperty("--marquee-distance", `${group.scrollWidth}px`);
+500:         track.style.setProperty("--marquee-duration", `${Math.max(22, group.scrollWidth / 42)}s`);
+501:     });
+502: }
+503: 
+504: renderProjects();
+505: renderAchievements();
+506: renderTechnologyCategories();
+507: setupTechnologyMarquees();
+508: window.addEventListener("resize", setupTechnologyMarquees);
+509: 
+The above content shows the entire, complete file contents of the requested file.

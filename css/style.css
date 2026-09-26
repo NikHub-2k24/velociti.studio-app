@@ -290,14 +290,14 @@ h3 {
 ========================================= */
 .horizontal-timeline {
     display: flex;
-    gap: 32px;
-    overflow-x: auto;
+    gap: 16px;
+    overflow-x: visible;
     padding-bottom: 40px;
     scrollbar-width: none; /* Firefox */
 }
 .horizontal-timeline::-webkit-scrollbar { display: none; }
 .ht-step {
-    flex: 0 0 280px;
+    flex: 1;
     position: relative;
     padding-top: 60px;
 }

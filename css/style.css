@@ -732,3 +732,31 @@ h3 {
 .day:not(.active):not(:empty) {
     opacity: 0.5; /* more visible than before */
 }
+
+/* =========================================
+   ANIMATION HELPERS (added by animations.js)
+   ========================================= */
+/* Word-split heading overflow clip */
+.word { display: inline-block; overflow: hidden; vertical-align: bottom; }
+.word-inner { display: inline-block; }
+
+/* Scrubbed timeline fill line */
+.ht-fill-line {
+    position: absolute;
+    top: 24px;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: var(--accent);
+    transform-origin: left center;
+    transform: scaleX(0);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Node active state set by GSAP */
+.ht-node.active {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #ffffff;
+}

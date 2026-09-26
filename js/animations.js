@@ -1,9 +1,6 @@
 /**
  * animations.js — Velociti Studio
- * GSAP 3.12.5 + ScrollTrigger — hero entrance, scroll reveals, cursor follower, hover lift,
- * scrubbed timeline, word-by-word headings, hero parallax,
- * magnetic buttons, 3D card tilt, clip-path image reveal.
- * All animations are reduced-motion safe and GPU-accelerated.
+ * GSAP 3.12.5 + ScrollTrigger — mobile optimized pass
  */
 
 (function () {
@@ -18,11 +15,21 @@
   const EASE    = 'power3.out';
   const EASE_S  = 'sine.inOut';
   const isMobile = () => window.innerWidth < 768;
-  const isTouch  = window.matchMedia('(hover: none)').matches;
+  const isTouch  = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+  // ── Fix ScrollTrigger recalculation on mobile ────────────────────────────
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => ScrollTrigger.refresh(), 200);
+  });
+  window.addEventListener('orientationchange', () => {
+    setTimeout(() => ScrollTrigger.refresh(), 200);
+  });
 
 
   // ══════════════════════════════════════════════════════════════════════════
-  // ① WORD-BY-WORD HEADING REVEALS  (pacing bumped: duration 0.55 → 0.82)
+  // ① WORD-BY-WORD HEADING REVEALS  (stagger halved on mobile)
   // ══════════════════════════════════════════════════════════════════════════
   function splitAndReveal(headingEl, trigger) {
     if (!headingEl) return;
@@ -32,14 +39,15 @@
       .join(' ');
 
     const inners = headingEl.querySelectorAll('.word-inner');
+    const staggerTime = isMobile() ? 0.02 : 0.045;
 
     gsap.from(inners, {
       opacity   : 0,
       y         : 24,
       rotation  : 4,
-      duration  : 0.82,         // was 0.55
-      ease      : EASE_S,       // smoother than power3
-      stagger   : 0.045,        // was 0.04
+      duration  : 0.82,
+      ease      : EASE_S,
+      stagger   : staggerTime,
       clearProps: 'willChange',
       scrollTrigger: {
         trigger: trigger || headingEl,
@@ -49,7 +57,7 @@
     });
   }
 
-  // Hero H1 word-split (on load, no scroll trigger)
+  // Hero H1
   const heroH1 = document.querySelector('.hero-content h1');
   if (heroH1) {
     const words = heroH1.textContent.trim().split(/\s+/);
@@ -61,10 +69,10 @@
       opacity   : 0,
       y         : 26,
       rotation  : 4,
-      duration  : 0.82,         // was 0.55
+      duration  : 0.82,
       ease      : EASE_S,
-      stagger   : 0.05,
-      delay     : 0.15,         // after eyebrow
+      stagger   : isMobile() ? 0.025 : 0.05,
+      delay     : 0.15,
       clearProps: 'willChange',
     });
   }
@@ -78,7 +86,7 @@
 
 
   // ══════════════════════════════════════════════════════════════════════════
-  // ② HERO ENTRANCE  (duration 0.65 → 0.95, stagger 0.13 → 0.18)
+  // ② HERO ENTRANCE
   // ══════════════════════════════════════════════════════════════════════════
   const heroContent = document.querySelector('.hero-content');
   const heroVisual  = document.querySelector('.hero-visual');
@@ -93,9 +101,9 @@
     gsap.from(items, {
       opacity   : 0,
       y         : 32,
-      duration  : 0.95,         // was 0.65
+      duration  : 0.95,
       ease      : EASE_S,
-      stagger   : 0.18,         // was 0.13
+      stagger   : isMobile() ? 0.09 : 0.18,
       clearProps: 'willChange',
     });
   }
@@ -104,16 +112,16 @@
     gsap.from(heroVisual, {
       opacity   : 0,
       y         : 26,
-      duration  : 1.0,          // was 0.7
+      duration  : 1.0,
       ease      : EASE_S,
-      delay     : 0.42,         // was 0.35
+      delay     : 0.42,
       clearProps: 'willChange',
     });
   }
 
 
   // ══════════════════════════════════════════════════════════════════════════
-  // ③ HERO PARALLAX — pacing unchanged (scrub-linked, not time-based)
+  // ③ HERO PARALLAX
   // ══════════════════════════════════════════════════════════════════════════
   if (heroVisual && heroContent) {
     const heroSection = document.querySelector('#home');
@@ -130,45 +138,52 @@
   }
 
 
-  // ── Helper: scroll-triggered fade+slide reveal  (duration bumped ~50%) ───
+  // ── Helper: scroll-triggered fade+slide reveal ───────────────────────────
   function revealFrom(selector, triggerEl, vars = {}) {
     const els = gsap.utils.toArray(selector);
     if (!els.length) return;
 
     const {
       stagger  = 0,
-      y        = 26,            // was 22
-      duration = 1.05,          // was 0.7
+      y        = 26,
+      duration = 1.05,
       start    = 'top 85%',
       delay    = 0,
     } = vars;
+
+    const actualStagger = isMobile() ? stagger * 0.5 : stagger;
 
     gsap.from(els, {
       opacity   : 0,
       y,
       duration,
-      ease      : EASE_S,       // smoother
-      stagger,
+      ease      : EASE_S,
+      stagger   : actualStagger,
       delay,
       clearProps: 'willChange',
       scrollTrigger: { trigger: triggerEl || els[0], start, once: true },
     });
   }
 
-  // ── Eyebrow reveals ───────────────────────────────────────────────────────
-  document.querySelectorAll(
+  // ── Batched Eyebrow reveals ─────────────────────────────────────────────
+  ScrollTrigger.batch(
     '#vision .eyebrow, #values .eyebrow, #work .eyebrow,' +
-    '#process .eyebrow, #team .eyebrow, #contact .eyebrow'
-  ).forEach(el => {
-    gsap.from(el, {
-      opacity   : 0,
-      y         : 18,
-      duration  : 0.9,          // was 0.6
-      ease      : EASE_S,
-      clearProps: 'willChange',
-      scrollTrigger: { trigger: el, start: 'top 90%', once: true },
-    });
-  });
+    '#process .eyebrow, #team .eyebrow, #contact .eyebrow', 
+    {
+      start: 'top 90%',
+      once: true,
+      onEnter: (batch) => {
+        gsap.from(batch, {
+          opacity   : 0,
+          y         : 18,
+          duration  : 0.9,
+          ease      : EASE_S,
+          stagger   : isMobile() ? 0.05 : 0.1,
+          clearProps: 'willChange',
+        });
+      }
+    }
+  );
 
   // ── Vision body ───────────────────────────────────────────────────────────
   const visionSection = document.querySelector('#vision');
@@ -185,21 +200,23 @@
 
 
   // ══════════════════════════════════════════════════════════════════════════
-  // NEW A③ — CLIP-PATH WIPE for project images (left→right)
-  // Replaces the old simple fade for cs-visual containers
+  // NEW A③ — BATCHED CLIP-PATH WIPE for project images
   // ══════════════════════════════════════════════════════════════════════════
   const workSection = document.querySelector('#work');
   if (workSection) {
-    // Use setTimeout(0) so script.js's dynamic card injection is complete
     setTimeout(() => {
-      gsap.utils.toArray('#work .cs-visual').forEach(el => {
-        gsap.from(el, {
-          clipPath  : 'inset(0 100% 0 0)',
-          duration  : 1.3,
-          ease      : 'power3.inOut',
-          clearProps: 'clipPath,willChange',
-          scrollTrigger: { trigger: el, start: 'top 82%', once: true },
-        });
+      ScrollTrigger.batch('#work .cs-visual', {
+        start: 'top 82%',
+        once: true,
+        onEnter: (batch) => {
+          gsap.from(batch, {
+            clipPath  : 'inset(0 100% 0 0)',
+            duration  : isMobile() ? 0.9 : 1.3, // Faster on mobile
+            ease      : 'power3.inOut',
+            stagger   : isMobile() ? 0.08 : 0.15,
+            clearProps: 'clipPath,willChange',
+          });
+        }
       });
       revealFrom('#work .case-study .cs-content',
         workSection, { stagger: 0.12, y: 22, start: 'top 80%' });
@@ -208,10 +225,8 @@
   }
 
 
-
   // ══════════════════════════════════════════════════════════════════════════
-  // SCRUBBED PROJECT TIMELINE — end value increased for more scroll distance
-  // (steps.length * 160 → steps.length * 260)
+  // SCRUBBED PROJECT TIMELINE
   // ══════════════════════════════════════════════════════════════════════════
   const processSection = document.querySelector('#process');
   if (processSection) {
@@ -223,7 +238,6 @@
       const contents = gsap.utils.toArray('.ht-content');
       const htLine   = document.querySelector('.horizontal-timeline');
 
-      // Inject animated fill line
       const fillLine = document.createElement('div');
       fillLine.className = 'ht-fill-line';
       Object.assign(fillLine.style, {
@@ -251,16 +265,14 @@
         scrollTrigger: {
           trigger      : processSection,
           start        : 'top top',
-          end          : `+=${steps.length * 350}`,   // Increased scroll distance
+          end          : `+=${steps.length * 350}`,
           pin          : true,
-          scrub        : 1.0,                          // Tighter scrub feel
+          scrub        : 1.0,
           anticipatePin: 1,
         },
       });
 
-      // Sequential animation: Node activates -> Line draws to next node
       steps.forEach((step, i) => {
-        // 1. Activate node
         tl.to(nodes[i], {
           borderColor     : 'var(--accent)',
           color           : '#ffffff',
@@ -275,7 +287,6 @@
           ease    : 'power2.inOut',
         }, "<0.1");
 
-        // 2. Reveal text
         tl.to(contents[i], {
           opacity : 1,
           y       : 0,
@@ -283,7 +294,6 @@
           ease    : 'power2.out',
         }, "<0");
 
-        // 3. Draw line to next node
         tl.to(fillLine, { 
           scaleX: (i + 1) / steps.length, 
           duration: 0.6, 
@@ -291,8 +301,6 @@
         });
       });
 
-      // Add a buffer at the end of the timeline (no animation)
-      // This keeps the section pinned for extra scroll distance so the user can read all 6 points
       tl.to({}, { duration: 2 });
     }
   }
@@ -312,7 +320,7 @@
 
 
   // ══════════════════════════════════════════════════════════════════════════
-  // NEW A① — MAGNETIC BUTTONS  (snap stays fast per spec — duration 0.25/0.4)
+  // NEW A① — MAGNETIC BUTTONS (disabled on touch)
   // ══════════════════════════════════════════════════════════════════════════
   if (!isTouch) {
     const MAGNETIC_SELECTORS = [
@@ -324,7 +332,7 @@
 
     document.querySelectorAll(MAGNETIC_SELECTORS.join(', ')).forEach(btn => {
       const RANGE = 55;
-      const PULL  = 5;   // max px shift
+      const PULL  = 5;
 
       btn.addEventListener('mousemove', e => {
         const rect = btn.getBoundingClientRect();
@@ -335,9 +343,8 @@
         const dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < RANGE) {
-          // Linear map: cursor at edge = 0 shift, cursor at button center = PULL shift
-          const t  = 1 - dist / RANGE;   // 0..1
-          const shiftX = (dx / RANGE) * PULL;   // proportional, max ±PULL px
+          const t  = 1 - dist / RANGE;
+          const shiftX = (dx / RANGE) * PULL;
           const shiftY = (dy / RANGE) * PULL;
           gsap.to(btn, {
             x        : shiftX * t,
@@ -357,11 +364,11 @@
 
 
   // ══════════════════════════════════════════════════════════════════════════
-  // NEW A② — 3D CARD TILT  (desktop only, max ±6°)
+  // NEW A② — 3D CARD TILT (disabled on touch)
   // ══════════════════════════════════════════════════════════════════════════
   if (!isTouch) {
     const TILT_SELECTORS = ['.bento-card', '.team-card', '.case-study'];
-    const MAX_TILT = 6;  // degrees
+    const MAX_TILT = 6;
 
     document.querySelectorAll(TILT_SELECTORS.join(', ')).forEach(card => {
       card.style.transformStyle = 'preserve-3d';
@@ -401,26 +408,28 @@
   }
 
 
-  // ── Hover lift — unchanged (fast, UI feedback) ────────────────────────────
-  function addHoverLift(selector, liftY) {
-    document.querySelectorAll(selector).forEach(el => {
-      el.addEventListener('mouseenter', () =>
-        gsap.to(el, { y: liftY, duration: 0.25, ease: 'power2.out',
-          boxShadow: '0 16px 40px rgba(255,107,53,0.18)' })
-      );
-      el.addEventListener('mouseleave', () =>
-        gsap.to(el, { y: 0, duration: 0.3, ease: 'power2.out',
-          boxShadow: '0 0px 0px rgba(255,107,53,0)' })
-      );
-    });
+  // ── Hover lift (disabled on touch) ─────────────────────────────────────────
+  if (!isTouch) {
+    function addHoverLift(selector, liftY) {
+      document.querySelectorAll(selector).forEach(el => {
+        el.addEventListener('mouseenter', () =>
+          gsap.to(el, { y: liftY, duration: 0.25, ease: 'power2.out',
+            boxShadow: '0 16px 40px rgba(255,107,53,0.18)' })
+        );
+        el.addEventListener('mouseleave', () =>
+          gsap.to(el, { y: 0, duration: 0.3, ease: 'power2.out',
+            boxShadow: '0 0px 0px rgba(255,107,53,0)' })
+        );
+      });
+    }
+
+    addHoverLift('.bento-card', -5);
+    addHoverLift('.team-card',  -5);
+    addHoverLift('.case-study', -4);
   }
 
-  addHoverLift('.bento-card', -5);
-  addHoverLift('.team-card',  -5);
-  addHoverLift('.case-study', -4);
 
-
-  // ── Cursor follower — unchanged ───────────────────────────────────────────
+  // ── Cursor follower (disabled on touch) ──────────────────────────────────
   if (!isTouch) {
     const dot = document.createElement('div');
     dot.id = 'cursor-follower';

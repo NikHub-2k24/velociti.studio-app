@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 const thisDate = new Date(year, month, i);
                 
-                if (thisDate.getDay() === 0 || thisDate.getDay() === 6 || thisDate < today) {
+                if (thisDate.getDay() === 0 || thisDate < today) {
                     dayEl.classList.add('disabled');
                 } else {
                     dayEl.addEventListener('click', () => {

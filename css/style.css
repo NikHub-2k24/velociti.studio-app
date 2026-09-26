@@ -62,12 +62,7 @@ h1, h2, h3, h4, p { margin: 0; }
 }
 
 /* LOGO REWORK */
-.brand-logo {
-    height: 24px;
-    width: auto;
-    object-fit: contain;
-    filter: brightness(1.2) drop-shadow(0 0 12px rgba(255,255,255,0.1));
-}
+.brand-logo { height: 40px; width: auto; object-fit: contain; filter: none; padding: 0; border: none; margin: 0; }
 
 .primary-nav, .footer-nav {
     display: flex;
@@ -245,12 +240,7 @@ h3 {
 /* =========================================
    HOW WE DO THINGS (BENTO GRID)
 ========================================= */
-.bento-values {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: minmax(280px, auto);
-    gap: 24px;
-}
+.bento-values { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; position: relative; z-index: 2; }
 .bento-card {
     background: var(--bg-secondary);
     border: 1px solid var(--border);
@@ -595,7 +585,7 @@ h3 {
    MEDIA QUERIES
 ========================================= */
 @media (max-width: 1024px) {
-    .bento-values { grid-template-columns: 1fr 1fr; }
+    .bento-values { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; position: relative; z-index: 2; }
     .bento-wide { grid-column: span 1; }
     .vision-layout { grid-template-columns: 1fr; gap: 32px; }
     .cta-grid { grid-template-columns: 1fr; }
@@ -655,3 +645,40 @@ h3 {
         display: none;
     }
 }
+
+/* CALENDAR STYLES */
+.booking-ui { display: flex; flex-direction: column; gap: var(--space-md); text-align: left; background: transparent; padding: 0; border: none; }
+.calendar-wrapper { display: flex; gap: var(--space-md); flex-wrap: wrap; }
+.calendar-app { flex: 1; min-width: 280px; background: rgba(0,0,0,0.2); border: 1px solid var(--color-border); border-radius: 8px; padding: var(--space-md); }
+.cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-sm); font-weight: bold; }
+.cal-header button { background: transparent; border: 1px solid var(--color-border); color: var(--color-text-main); border-radius: 4px; padding: 4px 12px; cursor: pointer; }
+.cal-header button:hover { background: var(--color-accent-transparent); color: var(--color-accent); }
+.cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 8px; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+.cal-day { padding: 8px 0; font-size: 0.9rem; border-radius: 4px; cursor: pointer; transition: background 0.2s; border: 1px solid transparent; display: flex; align-items: center; justify-content: center; height: 36px; }
+.cal-day:not(.empty):not(.disabled):hover { border-color: var(--color-accent); }
+.cal-day.active { background: var(--color-accent); color: #fff; font-weight: bold; }
+.cal-day.disabled { color: rgba(255,255,255,0.2); cursor: not-allowed; opacity: 0.4; }
+.cal-sidebar { width: 100%; }
+.cal-slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; margin: var(--space-sm) 0; max-height: 150px; overflow-y: auto; }
+.cal-slot-btn { background: var(--bg-tertiary, rgba(255,255,255,0.05)); border: 1px solid var(--border, rgba(255,255,255,0.1)); color: var(--text-primary, #fff); padding: 8px; border-radius: 4px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
+.cal-slot-btn:hover { border-color: var(--accent); background: var(--accent); color: #fff; }
+.cal-slot-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.cal-success-toast { padding: var(--space-md); background: rgba(0,255,0,0.1); border: 1px solid #27c93f; border-radius: 8px; display: none; }
+
+.cs-visual { position: relative; overflow: hidden; }
+.cs-visual img.slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; background: #0a0e1a; opacity: 0; transition: opacity 1s ease-in-out; }
+.cs-visual img.slide.active { opacity: 1; }
+
+.form-input {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--bg-tertiary, rgba(255,255,255,0.05));
+    border: 1px solid var(--border, rgba(255,255,255,0.1));
+    border-radius: 6px;
+    color: var(--text-primary, #fff);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease;
+}
+.form-input:focus { outline: none; border-color: var(--accent); }

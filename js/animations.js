@@ -78,7 +78,7 @@
   }
 
   // Section H2s
-  ['#vision h2', '#values h2', '#work h2', '#process h2', '#team h2', '#contact h2']
+  ['#vision h2', '#values h2', '#work h2', '#technologies h2', '#process h2', '#team h2', '#contact h2']
     .forEach(sel => {
       const el = document.querySelector(sel);
       if (el) splitAndReveal(el, el.closest('section'));
@@ -168,7 +168,7 @@
   // ── Batched Eyebrow reveals ─────────────────────────────────────────────
   ScrollTrigger.batch(
     '#vision .eyebrow, #values .eyebrow, #work .eyebrow,' +
-    '#process .eyebrow, #team .eyebrow, #contact .eyebrow', 
+    '#technologies .eyebrow, #process .eyebrow, #team .eyebrow, #contact .eyebrow', 
     {
       start: 'top 90%',
       once: true,

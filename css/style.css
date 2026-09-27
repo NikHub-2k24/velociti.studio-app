@@ -783,10 +783,25 @@ h3 {
 .tech-marquee-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    margin-bottom: 60px;
+    gap: 32px;
     width: 100vw;
     margin-left: calc(50% - 50vw);
+}
+
+.tech-row-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.tech-row-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    padding-left: 12px;
+    border-left: 2px solid var(--accent);
 }
 
 .tech-row {
@@ -796,37 +811,12 @@ h3 {
     width: 100%;
 }
 
-.tech-row-label-container {
-    position: absolute;
-    left: 0;
-    z-index: 10;
-    background: linear-gradient(90deg, var(--bg-primary) 70%, transparent);
-    padding-left: max(5vw, calc((100vw - 1200px) / 2));
-    padding-right: 40px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    pointer-events: none;
-}
-.section-darker .tech-row-label-container {
-    background: linear-gradient(90deg, var(--bg-secondary) 70%, transparent);
-}
-
-.tech-row-label {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: var(--accent);
-    text-transform: uppercase;
-    white-space: nowrap;
-}
-
 .tech-marquee {
     display: flex;
     overflow: hidden;
     user-select: none;
-    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
     width: 100%;
 }
 
@@ -874,25 +864,6 @@ h3 {
     to { transform: translateX(-100%); }
 }
 
-@media (max-width: 1024px) {
-    .tech-row-label-container {
-        display: none;
-    }
-    .tech-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-    .tech-row-label {
-        display: block;
-        padding-left: 5vw;
-    }
-    .tech-marquee {
-        mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-        -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-    }
-}
-
 @media (prefers-reduced-motion: reduce) {
     .tech-marquee-inner {
         animation: none !important;
@@ -907,15 +878,6 @@ h3 {
         overflow: visible;
     }
     .tech-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-        margin-bottom: 24px;
         padding: 0 max(5vw, calc((100vw - 1200px) / 2));
-    }
-    .tech-row-label-container {
-        position: static;
-        background: none;
-        padding: 0;
     }
 }

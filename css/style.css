@@ -433,6 +433,13 @@ h3 {
     border: 1px solid var(--border);
     background: var(--bg-tertiary);
 }
+.team-card .profile-placeholder img,
+.team-card .profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
 .team-card h3 {
     font-size: 1.25rem;
     margin-bottom: 12px;
@@ -456,7 +463,69 @@ h3 {
     background: var(--accent);
     color: #fff;
 }
+.team-card .social-icon.social-icon-placeholder {
+    opacity: 0.6;
+    cursor: default;
+    pointer-events: none;
+}
 .team-card .social-icon svg { width: 20px; height: 20px; }
+
+/* =========================================
+   TESTIMONIALS
+========================================= */
+.testimonial-showcase {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.testimonial-video-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 360px;
+    padding: 10px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 100, 31, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.testimonial-video-wrapper:hover {
+    border-color: var(--border-strong);
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255, 100, 31, 0.15);
+}
+
+.testimonial-video-wrapper .video-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #000;
+}
+
+.testimonial-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 20px;
+}
+
+@media (max-width: 768px) {
+    .testimonial-video-wrapper {
+        max-width: 300px;
+        padding: 8px;
+        border-radius: 24px;
+    }
+    
+    .testimonial-video-wrapper .video-container,
+    .testimonial-video {
+        border-radius: 18px;
+    }
+}
 
 /* =========================================
    FINAL CTA
